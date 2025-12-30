@@ -1,36 +1,33 @@
+import { useRooms } from "@/src/contexts/roomContext";
 import { cardStyles } from "@/src/styles/card";
-import {
-  AntDesign,
-  FontAwesome6,
-  MaterialCommunityIcons,
-  SimpleLineIcons,
-} from "@expo/vector-icons/";
+import { AntDesign, FontAwesome6, SimpleLineIcons } from "@expo/vector-icons/";
 import { Link } from "expo-router";
 import { Text, View } from "react-native";
 
 type Props = {
+  id: number;
   sala: string;
-  vagas: number;
-  vagasOcupadas: number;
-  temperatura: number;
+  ocupacaoPercent?: number;
+  temperatura?: number;
   wifi?: number;
   internet?: number;
 };
 
 export default function CardPreview({
+  id,
   sala,
-  vagas,
-  vagasOcupadas,
+  ocupacaoPercent,
   temperatura,
   wifi,
   internet,
 }: Props) {
-  const percentageOfOccupation = vagas - vagasOcupadas;
+  const { fetchInfoRoom } = useRooms();
 
   return (
     <Link
       href={{ pathname: "/roomDetails", params: { sala } }}
       style={cardStyles.container}
+      onPress={() => fetchInfoRoom(id)}
     >
       <View style={cardStyles.inlineTitle}>
         <Text style={cardStyles.title}>{sala}</Text>
@@ -39,7 +36,7 @@ export default function CardPreview({
 
       <View style={cardStyles.inlineOthers}>
         <Text>Baixa</Text>
-        <Text>{percentageOfOccupation}</Text>
+        <Text>{ocupacaoPercent}</Text>
         <Text>%</Text>
         <Text>Ocupado</Text>
       </View>
@@ -51,11 +48,7 @@ export default function CardPreview({
         </Text>
         <Text style={cardStyles.inlineOthers}>
           <AntDesign name="wifi" size={20} color="black" />
-          <Text>Bom</Text>
-        </Text>
-        <Text style={cardStyles.inlineOthers}>
-          <MaterialCommunityIcons name="ethernet" size={20} color="black" />
-          <Text>Boa</Text>
+          <Text>{internet}</Text>
         </Text>
       </View>
     </Link>
