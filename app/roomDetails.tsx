@@ -1,8 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-
+import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 import CondicoesAmbiente from "../src/components/custom/CondicoesAmbiente";
 import StatusAtual from "../src/components/custom/StatusAtual";
@@ -23,10 +22,16 @@ export default function RoomDetails() {
   const vagasDisponiveis = dadosDaSala.vagasTotais - dadosDaSala.vagasOcupadas;
   const ocupacaoPercentual = Math.round((dadosDaSala.vagasOcupadas / dadosDaSala.vagasTotais) * 100);
 
+  // Função para simular a atualização
+  const handleAtualizar = () => {
+    console.log("Atualizando dados...");
+    Alert.alert("Atualizado", "Os dados foram recarregados com sucesso!");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+        <TouchableOpacity onPress={() => router.navigate("/")} style={styles.backButton}>
           <Feather name="arrow-left" size={24} color="#FFF" />
           <Text style={styles.backText}>Voltar</Text>
         </TouchableOpacity>
@@ -46,6 +51,12 @@ export default function RoomDetails() {
           temperatura={dadosDaSala.temperatura}
           wifiDisponivel={dadosDaSala.wifi}
         />
+
+        {/* --- BOTÃO DE ATUALIZAR --- */}
+        <TouchableOpacity style={styles.buttonContainer} onPress={handleAtualizar}>
+          <Feather name="refresh-cw" size={20} color="#FFFFFF" />
+          <Text style={styles.buttonText}>Atualizar Dados</Text>
+        </TouchableOpacity>
 
       </ScrollView>
     </View>

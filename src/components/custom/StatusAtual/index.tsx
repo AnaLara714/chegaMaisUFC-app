@@ -1,3 +1,4 @@
+import { Feather } from "@expo/vector-icons";
 import React from "react";
 import { Text, View } from "react-native";
 import { styles } from "./styles";
@@ -6,7 +7,7 @@ interface StatusAtualProps {
   ocupacaoPercentual: number;
   vagasDisponiveis: number;
   totalVagas: number;
-  statusLabel?: string; // ex: "Baixa", "Média", "Alta"
+  statusLabel?: string; 
 }
 
 export default function StatusAtual({
@@ -17,6 +18,7 @@ export default function StatusAtual({
 }: StatusAtualProps) {
   return (
     <View style={styles.container}>
+      {/* Cabeçalho */}
       <View style={styles.header}>
         <Text style={styles.title}>Status Atual</Text>
         <View style={styles.badge}>
@@ -24,9 +26,11 @@ export default function StatusAtual({
         </View>
       </View>
 
+      {/* Porcentagem Centralizada */}
       <Text style={styles.percent}>{ocupacaoPercentual}%</Text>
       <Text style={styles.subtitle}>Ocupação Atual</Text>
 
+      {/* Barra de Progresso */}
       <View style={styles.progressBackground}>
         <View
           style={[
@@ -36,9 +40,13 @@ export default function StatusAtual({
         />
       </View>
 
-      <Text style={styles.vagas}>
-        {vagasDisponiveis} vagas disponíveis de {totalVagas}
-      </Text>
+      {/* Rodapé com Ícone */}
+      <View style={styles.footerContainer}>
+        <Feather name="users" size={18} color="#9CA3AF" style={{ marginRight: 6 }} />
+        <Text style={styles.vagas}>
+          {vagasDisponiveis} Vagas Disponíveis de {totalVagas}
+        </Text>
+      </View>
     </View>
   );
 }

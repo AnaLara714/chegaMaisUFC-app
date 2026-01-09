@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F2F5F9",
   },
-  
+
   // --- HEADER (Azul) ---
   headerContainer: {
     backgroundColor: "#0055FF",
@@ -16,27 +16,28 @@ export const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "center",
   },
-  
+
   backButton: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 16,
     opacity: 0.9,
   },
-  
+
   backText: {
     color: "#FFFFFF",
     fontSize: 16,
     marginLeft: 8,
     fontFamily: "Poppins_500Medium",
   },
-  
+
   title: {
-    fontSize: 26,
+    fontSize: 20,                      
     color: "#FFFFFF",
-    fontFamily: "Poppins_700Bold",
-    fontWeight: "bold",
+    fontFamily: "Poppins_600SemiBold", 
+    fontWeight: "600",                 
     width: "100%",
+    textAlign: "left",                 
   },
 
   // --- CONTEÚDO (Cards) ---
@@ -60,7 +61,7 @@ export const styles = StyleSheet.create({
   buttonText: {
     color: "#FFFFFF",
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "medium",
     marginLeft: 8,
     fontFamily: "Poppins_500Medium",
   }
