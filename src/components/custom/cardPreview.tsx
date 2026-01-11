@@ -4,6 +4,24 @@ import { AntDesign, FontAwesome6, SimpleLineIcons } from "@expo/vector-icons/";
 import { Link } from "expo-router";
 import { Text, View } from "react-native";
 
+const getOcupacaoStatus = (percent = 0) => {
+  if (percent <= 40) {
+    return { label: "Baixa", color: "#22C55E", badge: "#D1FAE5" };
+  }
+  if (percent <= 70) {
+    return { label: "Média", color: "#F59E0B", badge: "#FEF3C7" };
+  }
+  return { label: "Alta", color: "#EF4444", badge: "#FEE2E2" };
+};
+
+const getWifiStatus = (internet?: number) => {
+  if (!internet || internet === 0)
+    return { label: "Sem Wi-Fi", color: "#9CA3AF" };
+  if (internet < 50)
+    return { label: "Ruim", color: "#F59E0B" };
+  return { label: "Bom", color: "#22C55E" };
+};
+
 type Props = {
   id: number;
   sala: string;
@@ -22,8 +40,10 @@ export default function CardPreview({
   internet,
 }: Props) {
   const { fetchInfoRoom } = useRooms();
+  const ocupacao = getOcupacaoStatus(ocupacaoPercent);
+  const wifiStatus = getWifiStatus(internet);
 
-  return (
+    return (
     <Link
       href={{ pathname: "/roomDetails", params: { sala } }}
       style={cardStyles.container}
@@ -35,22 +55,59 @@ export default function CardPreview({
       </View>
 
       <View style={cardStyles.inlineOthers}>
-        <Text>Baixa</Text>
-        <Text>{ocupacaoPercent}</Text>
-        <Text>%</Text>
-        <Text>Ocupado</Text>
+        <Text
+          style={[
+            cardStyles.statusBadge,
+            { backgroundColor: ocupacao.badge, color: ocupacao.color },
+          ]}
+        >
+          {ocupacao.label}
+        </Text>
+
+        <Text>{ocupacaoPercent}% Ocupado</Text>
+      </View>
+
+      <View style={cardStyles.progressBar}>
+        <View
+          style={[
+            cardStyles.progressFill,
+            {
+              width: `${ocupacaoPercent ?? 0}%`,
+              backgroundColor: ocupacao.color,
+            },
+          ]}
+        />
       </View>
 
       <View style={cardStyles.inlineOthers}>
-        <Text style={cardStyles.inlineOthers}>
-          <FontAwesome6 name="temperature-empty" size={20} color="black" />{" "}
-          <Text>{temperatura}°C</Text>
+        <View style={cardStyles.infoItem}>
+          <FontAwesome6
+           name="temperature-empty"
+           size={18}
+           color="#374151"
+          />
+          <Text style={cardStyles.infoText}>
+           {temperatura}°C
+          </Text>
+       </View>
+
+       <View style={cardStyles.infoItem}>
+        <AntDesign
+         name="wifi"
+         size={18}
+         color={wifiStatus.color}
+        />
+       <Text
+         style={[
+         cardStyles.infoText,
+          { color: wifiStatus.color },
+         ]}
+        >
+           {wifiStatus.label}
         </Text>
-        <Text style={cardStyles.inlineOthers}>
-          <AntDesign name="wifi" size={20} color="black" />
-          <Text>{internet}</Text>
-        </Text>
-      </View>
-    </Link>
+     </View>
+   </View>
+   </Link>
   );
+
 }

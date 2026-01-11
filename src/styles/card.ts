@@ -36,4 +36,36 @@ export const cardStyles = StyleSheet.create({
     fontSize: 22,
     fontFamily: "Poppins_500Medium",
   },
+    statusBadge: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+    fontSize: 12,
+    fontFamily: "Poppins_500Medium",
+  },
+
+  progressBar: {
+    width: "100%",
+    height: 8,
+    backgroundColor: "#E5E7EB",
+    borderRadius: 8,
+    marginTop: 8,
+    overflow: "hidden",
+  },
+
+  progressFill: {
+    height: "100%",
+    borderRadius: 8,
+  },
+  infoItem: {
+  flexDirection: "row",
+  alignItems: "center",
+  gap: 6,
+  },
+
+  infoText: {
+  fontSize: 13,
+  color: "#374151",
+  fontFamily: "Poppins_500Medium",
+  },
 });
