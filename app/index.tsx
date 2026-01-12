@@ -1,9 +1,12 @@
 import CardPreview from "@/src/components/custom/cardPreview";
+import { useRooms } from "@/src/contexts/roomContext";
 import { globalStyles } from "@/src/styles/global";
 import { headerStyle } from "@/src/styles/header";
 import { ScrollView, Text, View } from "react-native";
 
 export default function Home() {
+  const { rooms } = useRooms();
+
   return (
     <View style={globalStyles.container}>
       <View style={headerStyle.container}>
@@ -14,54 +17,18 @@ export default function Home() {
       </View>
       <ScrollView style={globalStyles.scroll}>
         <View style={globalStyles.container}>
-          <CardPreview
-            sala="Biblioteca Mucambinho"
-            vagas={50}
-            vagasOcupadas={30}
-            temperatura={22}
-          />
-          <CardPreview
-            sala="Biblioteca Mucambinho"
-            vagas={50}
-            vagasOcupadas={30}
-            temperatura={22}
-          />
-          <CardPreview
-            sala="Lab. da Odontologia"
-            vagas={50}
-            vagasOcupadas={30}
-            temperatura={22}
-          />
-          <CardPreview
-            sala="Lab. de Informática"
-            vagas={60}
-            vagasOcupadas={20}
-            temperatura={37}
-          />
-          <CardPreview
-            sala="Lab. da Odontologia"
-            vagas={50}
-            vagasOcupadas={30}
-            temperatura={22}
-          />
-          <CardPreview
-            sala="Lab. de Informática"
-            vagas={60}
-            vagasOcupadas={20}
-            temperatura={37}
-          />
-          <CardPreview
-            sala="Lab. da Odontologia"
-            vagas={50}
-            vagasOcupadas={30}
-            temperatura={22}
-          />
-          <CardPreview
-            sala="Lab. de Informáticaaa"
-            vagas={60}
-            vagasOcupadas={20}
-            temperatura={37}
-          />
+          {rooms.map((item) => {
+            return (
+              <CardPreview
+                key={item.id}
+                id={item.id}
+                sala={item.nome}
+                ocupacaoPercent={item?.ocupacaoPercent}
+                temperatura={item.ultimas?.temperatura?.valor}
+                wifi={item.ultimas?.wifi?.valor}
+              />
+            );
+          })}
         </View>
       </ScrollView>
     </View>

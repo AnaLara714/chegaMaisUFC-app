@@ -1,3 +1,4 @@
+import { RoomProvider } from "@/src/contexts/roomContext";
 import {
   Poppins_400Regular,
   Poppins_500Medium,
@@ -29,11 +30,13 @@ export default function RootLayout() {
 
   return (
     <>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="roomDetails" options={{ headerShown: false }} />
-      </Stack>
-      <StatusBar style="auto" />
+      <RoomProvider>
+        <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="roomDetails" options={{ headerShown: false }} />
+        </Stack>
+        <StatusBar style="auto" />
+      </RoomProvider>
     </>
   );
 }

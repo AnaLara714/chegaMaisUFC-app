@@ -11,4 +11,10 @@ export const globalStyles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
+   backText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    marginLeft: 8,
+    fontFamily: "Poppins_500Medium",
+  },
 });
