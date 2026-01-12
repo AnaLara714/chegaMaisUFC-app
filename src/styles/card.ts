@@ -45,11 +45,12 @@ export const cardStyles = StyleSheet.create({
   },
 
   progressBar: {
-    width: "100%",
+    width: "95%",
     height: 8,
     backgroundColor: "#E5E7EB",
     borderRadius: 8,
     marginTop: 8,
+    marginBottom: 8,
     overflow: "hidden",
   },
 
@@ -57,15 +58,19 @@ export const cardStyles = StyleSheet.create({
     height: "100%",
     borderRadius: 8,
   },
+
   infoItem: {
-  flexDirection: "row",
-  alignItems: "center",
-  gap: 6,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginTop: 10,
+    marginRight: 10,
   },
 
   infoText: {
-  fontSize: 13,
-  color: "#374151",
-  fontFamily: "Poppins_500Medium",
+    fontSize: 13,
+    color: "#374151",
+    fontFamily: "Poppins_500Medium",  
+    marginTop: 5,
   },
 });

@@ -87,7 +87,7 @@ export default function CardPreview({
            color="#374151"
           />
           <Text style={cardStyles.infoText}>
-           {temperatura}°C
+           {temperatura || " Sem temperatura"}°C
           </Text>
        </View>
 
