@@ -7,7 +7,7 @@ export const cardStyles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-around",
     width: "90%",
-    height: 160,
+    height: 170,
     margin: 10,
     borderRadius: 20,
     padding: 20,
