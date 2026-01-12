@@ -7,8 +7,6 @@ import { ScrollView, Text, View } from "react-native";
 export default function Home() {
   const { rooms } = useRooms();
 
-  // console.log("vindo ", rooms);
-
   return (
     <View style={globalStyles.container}>
       <View style={headerStyle.container}>
@@ -28,7 +26,6 @@ export default function Home() {
                 ocupacaoPercent={item?.ocupacaoPercent}
                 temperatura={item.ultimas?.temperatura?.valor}
                 wifi={item.ultimas?.wifi?.valor}
-                internet={item.ultimas?.internet?.valor}
               />
             );
           })}

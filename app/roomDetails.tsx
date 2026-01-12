@@ -1,10 +1,12 @@
+import CurrentStatus from "@/src/components/custom/currentStatus";
+import MoreInfoCondition from "@/src/components/custom/moreInfosCondition";
 import { useRooms } from "@/src/contexts/roomContext";
 import { globalStyles } from "@/src/styles/global";
 import { headerStyle } from "@/src/styles/header";
 import { Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 
 export default function RoomDetails() {
   const { infoRoom } = useRooms();
@@ -53,38 +55,36 @@ export default function RoomDetails() {
 
     return `${hora} ${dataStr}`;
   };
+
   return (
     <View style={globalStyles.container}>
       <View style={headerStyle.container}>
         <Link href="/" style={headerStyle.goBack}>
           <Feather name="arrow-left" size={22} color="#FFFFFF" />
-          <Text>Voltar</Text>
+          <Text style={globalStyles.backText}>Voltar</Text>
         </Link>
         <Text style={headerStyle.title}>{infoRoom?.nome} </Text>
       </View>
-      <View>
-        <Text> Porcentagem de ocupacao {infoRoom?.ocupacaoPercent} </Text>
-        <Text> Ocupacao Atual {infoRoom?.ocupacaoAtual} </Text>
-        <Text> Vagas {infoRoom?.vagas} </Text>
-        <Text> Vagas disponiveis {vagasDisponiveis} </Text>
-        <Text> Temperatura {infoSensor?.temperatura?.valor} </Text>
-        <Text>
-          {" "}
-          Última Temperatura{" "}
-          {formatarLeitura(infoSensor?.temperatura?.timestamp)}{" "}
-        </Text>
-        <Text> Wifi {infoSensor?.wifi?.valor} </Text>
-        <Text>
-          {" "}
-          Última Temperatura {formatarLeitura(infoSensor?.wifi?.timestamp)}{" "}
-        </Text>
-        <Text>
-          Status da Internet:{" "}
-          {verificarWifi(infoSensor?.wifi?.timestamp)
-            ? "Sem sinal Wifi"
-            : "Wifi Ativo"}
-        </Text>
-      </View>
+      <ScrollView style={globalStyles.scroll}>
+        <View style={globalStyles.container}>
+
+        <CurrentStatus
+          ocupacaoPercentual={infoRoom?.ocupacaoPercent}
+          vagasDisponiveis={vagasDisponiveis}
+          totalVagas={infoRoom?.vagas}
+          statusLabel={infoRoom?.ocupacaoPercent}
+        />
+
+        <MoreInfoCondition 
+          temperatura={infoSensor?.temperatura?.valor}
+          ultimaLeituraTemperatura={formatarLeitura(infoSensor?.temperatura?.timestamp)}
+          wifiDisponivel={verificarWifi(infoSensor?.wifi?.timestamp)
+            ? "Conexão Indisponível"
+            : "Conexão Disponível"}
+        />
+        </View>
+      </ScrollView>
     </View>
   );
 }
+

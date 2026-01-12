@@ -2,25 +2,8 @@ import { useRooms } from "@/src/contexts/roomContext";
 import { cardStyles } from "@/src/styles/card";
 import { AntDesign, FontAwesome6, SimpleLineIcons } from "@expo/vector-icons/";
 import { Link } from "expo-router";
+import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-
-const getOcupacaoStatus = (percent = 0) => {
-  if (percent <= 40) {
-    return { label: "Baixa", color: "#22C55E", badge: "#D1FAE5" };
-  }
-  if (percent <= 70) {
-    return { label: "Média", color: "#F59E0B", badge: "#FEF3C7" };
-  }
-  return { label: "Alta", color: "#EF4444", badge: "#FEE2E2" };
-};
-
-const getWifiStatus = (internet?: number) => {
-  if (!internet || internet === 0)
-    return { label: "Sem Wi-Fi", color: "#9CA3AF" };
-  if (internet < 50)
-    return { label: "Ruim", color: "#F59E0B" };
-  return { label: "Bom", color: "#22C55E" };
-};
 
 type Props = {
   id: number;
@@ -37,11 +20,56 @@ export default function CardPreview({
   ocupacaoPercent,
   temperatura,
   wifi,
-  internet,
 }: Props) {
-  const { fetchInfoRoom } = useRooms();
+  const { fetchInfoRoom, infoRoom} = useRooms();
+  const [agora, setAgora] = useState(Date.now());
+
+  const getOcupacaoStatus = (percent = 0) => {
+  if (percent <= 40) {
+    return { label: "Baixa", color: "#22C55E", badge: "#D1FAE5" };
+  }
+  if (percent <= 70) {
+    return { label: "Média", color: "#F59E0B", badge: "#FEF3C7" };
+  }
+  return { label: "Alta", color: "#EF4444", badge: "#FEE2E2" };
+};
+
+const getWifiStatus = (internet?: number) => {
+  if(!internet) return
+  
+  if (internet < 50)
+    return { label: "Ruim", color: "#F59E0B" };
+  return { label: "Bom", color: "#22C55E" };
+};
+
+
   const ocupacao = getOcupacaoStatus(ocupacaoPercent);
-  const wifiStatus = getWifiStatus(internet);
+
+  const infoSensor = infoRoom?.ultimas;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setAgora(Date.now());
+    }, 2400000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const verificarWifi = (timestamp?: string) => {
+    if (!timestamp) return true;
+
+    const ultimaLeitura = new Date(timestamp).getTime();
+    const diffEmMs = agora - ultimaLeitura;
+
+    return diffEmMs > 10 * 60 * 1000; // 10 minutos
+  };
+
+  const wifiAtrasado = verificarWifi(infoSensor?.wifi?.timestamp);
+  const wifiAtivo = !wifiAtrasado;
+
+  const wifiStatus = wifiAtivo
+  ? getWifiStatus(infoSensor?.wifi?.valor)
+  : { label: "Sem Wi-Fi", color: "#9CA3AF" };
 
     return (
     <Link
@@ -95,15 +123,15 @@ export default function CardPreview({
         <AntDesign
          name="wifi"
          size={18}
-         color={wifiStatus.color}
+         color={wifiStatus?.color}
         />
        <Text
          style={[
          cardStyles.infoText,
-          { color: wifiStatus.color },
+          { color: wifiStatus?.color },
          ]}
         >
-           {wifiStatus.label}
+           {wifiStatus?.label}
         </Text>
      </View>
    </View>

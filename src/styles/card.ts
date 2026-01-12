@@ -36,12 +36,14 @@ export const cardStyles = StyleSheet.create({
     fontSize: 22,
     fontFamily: "Poppins_500Medium",
   },
-    statusBadge: {
+  
+  statusBadge: {
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 12,
     fontSize: 12,
     fontFamily: "Poppins_500Medium",
+    marginBottom: 8
   },
 
   progressBar: {
@@ -49,7 +51,7 @@ export const cardStyles = StyleSheet.create({
     height: 8,
     backgroundColor: "#E5E7EB",
     borderRadius: 8,
-    marginTop: 8,
+    marginTop: 18,
     marginBottom: 8,
     overflow: "hidden",
   },
