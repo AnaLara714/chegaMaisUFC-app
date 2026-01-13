@@ -25,23 +25,22 @@ export default function CardPreview({
   const [agora, setAgora] = useState(Date.now());
 
   const getOcupacaoStatus = (percent = 0) => {
-  if (percent <= 40) {
-    return { label: "Baixa", color: "#22C55E", badge: "#D1FAE5" };
-  }
-  if (percent <= 70) {
-    return { label: "Média", color: "#F59E0B", badge: "#FEF3C7" };
-  }
-  return { label: "Alta", color: "#EF4444", badge: "#FEE2E2" };
-};
+    if (percent <= 40) {
+      return { label: "Baixa", color: "#22C55E", badge: "#D1FAE5" };
+    }
+    if (percent <= 70) {
+      return { label: "Média", color: "#F59E0B", badge: "#FEF3C7" };
+    }
+    return { label: "Alta", color: "#EF4444", badge: "#FEE2E2" };
+  };
 
-const getWifiStatus = (internet?: number) => {
-  if(!internet) return
-  
-  if (internet < 50)
-    return { label: "Ruim", color: "#F59E0B" };
-  return { label: "Bom", color: "#22C55E" };
-};
-
+  const getWifiStatus = (internet?: number) => {
+    if(!internet) return
+    
+    if (internet < 50)
+      return { label: "Ruim", color: "#F59E0B" };
+      return { label: "Bom", color: "#22C55E" };
+  };
 
   const ocupacao = getOcupacaoStatus(ocupacaoPercent);
 
@@ -71,11 +70,10 @@ const getWifiStatus = (internet?: number) => {
   ? getWifiStatus(infoSensor?.wifi?.valor)
   : { label: "Sem Wi-Fi", color: "#9CA3AF" };
 
-    return (
+  return (
     <Link
-      href={{ pathname: "/roomDetails", params: { sala } }}
+      href={{ pathname: "/roomDetails", params: { id } }}
       style={cardStyles.container}
-      onPress={() => fetchInfoRoom(id)}
     >
       <View style={cardStyles.inlineTitle}>
         <Text style={cardStyles.title}>{sala}</Text>
@@ -137,5 +135,4 @@ const getWifiStatus = (internet?: number) => {
    </View>
    </Link>
   );
-
 }

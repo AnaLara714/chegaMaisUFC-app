@@ -25,7 +25,6 @@ export default function MoreInfoCondition({
         <View style={conditionStyles.textContainer}>
           <Text style={conditionStyles.label}>Temperatura</Text>
           <Text style={conditionStyles.value}>{temperatura}°C</Text>
-          <Text style={conditionStyles.label}>Última leitura: {ultimaLeituraTemperatura}</Text>
         </View>
       </View>
 
@@ -40,6 +39,7 @@ export default function MoreInfoCondition({
           </Text>
         </View>
       </View>
+      <Text style={conditionStyles.label}>Última leitura: {ultimaLeituraTemperatura || "-"}</Text>
     </View>
   );
 }

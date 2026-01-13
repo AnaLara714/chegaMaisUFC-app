@@ -4,13 +4,19 @@ import { useRooms } from "@/src/contexts/roomContext";
 import { globalStyles } from "@/src/styles/global";
 import { headerStyle } from "@/src/styles/header";
 import { Feather } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 
 export default function RoomDetails() {
-  const { infoRoom } = useRooms();
+   const { id } = useLocalSearchParams();
+
+  const { infoRoom, fetchInfoRoom } = useRooms();
   const [agora, setAgora] = useState(Date.now());
+
+  useEffect(() => {
+    fetchInfoRoom(Number(id));
+  }, [id]);
 
   const infoSensor = infoRoom?.ultimas;
 
@@ -78,7 +84,7 @@ export default function RoomDetails() {
         <MoreInfoCondition 
           temperatura={infoSensor?.temperatura?.valor}
           ultimaLeituraTemperatura={formatarLeitura(infoSensor?.temperatura?.timestamp)}
-          wifiDisponivel={verificarWifi(infoSensor?.wifi?.timestamp)
+          wifiDisponivel={verificarWifi(infoSensor?.temperatura?.timestamp)
             ? "Conexão Indisponível"
             : "Conexão Disponível"}
         />

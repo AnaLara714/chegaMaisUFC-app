@@ -2,10 +2,15 @@ import CardPreview from "@/src/components/custom/cardPreview";
 import { useRooms } from "@/src/contexts/roomContext";
 import { globalStyles } from "@/src/styles/global";
 import { headerStyle } from "@/src/styles/header";
+import { useEffect } from "react";
 import { ScrollView, Text, View } from "react-native";
 
 export default function Home() {
-  const { rooms } = useRooms();
+  const { rooms, fetchRommsSummary } = useRooms();
+
+  useEffect(() => {
+    fetchRommsSummary();
+  }, []);
 
   return (
     <View style={globalStyles.container}>
